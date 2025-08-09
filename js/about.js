@@ -1,48 +1,84 @@
-    const fxLayers = ['.fx-blobs','.fx-grid','.fx-scan','.fx-stars'].map(s=>document.querySelector(s));
-    document.getElementById('reduceFxBtn').addEventListener('click', ()=>{
-      const hidden = fxLayers[0].style.display === 'none';
-      fxLayers.forEach(el => el.style.display = hidden ? '' : 'none');
-    });
+  const fxLayers = ['.fx-blobs','.fx-grid','.fx-scan','.fx-stars'].map(s=>document.querySelector(s));
+  document.getElementById('reduceFxBtn').addEventListener('click', ()=>{
+    const hidden = fxLayers[0].style.display === 'none';
+    fxLayers.forEach(el => el.style.display = hidden ? '' : 'none');
+  });
 
-    // Skills data
-    const skills = [
-      { name: 'Java', level: 91, c1:'#ef4444', c2:'#f59e0b' },
-      { name: 'Spring Boot', level: 90, c1:'#16a34a', c2:'#22c55e' },
-      { name: 'React.js', level: 80, c1:'#06b6d4', c2:'#7c3aed' },
-      { name: 'Node.js', level: 70, c1:'#22c55e', c2:'#10b981' },
-      { name: 'MongoDB', level: 80, c1:'#22c55e', c2:'#84cc16' },
-      { name: 'MySQL', level: 85, c1:'#0ea5e9', c2:'#22d3ee' },
-      { name: 'Hibernate', level: 90, c1:'#22c55e', c2:'#0ea5e9' },
-      { name: 'Kafka', level: 40, c1:'#fb7185', c2:'#f43f5e' },
-    ];
+  const skills = [
+    { name: 'Java', level: 91, c1:'#ef4444', c2:'#f97316' },       // Red-Orange
+    { name: 'JavaScript', level: 85, c1:'#f59e0b', c2:'#eab308' }, // Gold-Yellow
+    { name: 'C++', level: 70, c1:'#a855f7', c2:'#d946ef' },        // Purple-Pink
+    { name: 'React.js', level: 80, c1:'#0ea5e9', c2:'#3b82f6' },   // Blue-Purple
+    { name: 'Tailwind CSS', level: 80, c1:'#06b6d4', c2:'#22d3ee' }, // Cyan
+    { name: 'Spring Boot', level: 90, c1:'#16a34a', c2:'#22c55e' },  // Green
+    { name: 'Node.js', level: 70, c1:'#10b981', c2:'#14b8a6' },      // Teal
+    { name: 'Hibernate', level: 90, c1:'#84cc16', c2:'#a3e635' },    // Lime
+    { name: 'MongoDB', level: 80, c1:'#22d3ee', c2:'#818cf8' },      // Cyan-Purple
+    { name: 'MySQL', level: 85, c1:'#60a5fa', c2:'#38bdf8' },        // Light Blue
+    { name: 'Redis', level: 70, c1:'#f43f5e', c2:'#fb7185' },        // Pink
+    { name: 'Docker', level: 75, c1:'#2563eb', c2:'#1d4ed8' },       // Deep Blue
+    { name: 'Git', level: 90, c1:'#f43f5e', c2:'#dc2626' },          // Red
+    { name: 'Postman', level: 85, c1:'#f97316', c2:'#f59e0b' },      // Orange
+    { name: 'SonarQube', level: 65, c1:'#8b5cf6', c2:'#a855f7' },    // Purple
+    { name: 'Kafka', level: 40, c1:'#d946ef', c2:'#c026d3' },        // Pink-Purple
+  ];
 
-    // Render skills orbs with animated conic progress
+  // Render enhanced skill cards (ring + bar)
+  (function renderSkills() {
     const grid = document.getElementById('skillsGrid');
-    skills.forEach((s, idx)=>{
-      const el = document.createElement('div');
-      el.className = 'orb';
-      el.style.setProperty('--c1', s.c1);
-      el.style.setProperty('--c2', s.c2);
-      el.innerHTML = `
-        <div class="ring"></div>
-        <div class="inner">
-          <div class="pct">${s.level}%</div>
-          <div class="label">${s.name}</div>
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    skills.forEach((s, idx) => {
+      // Column wrapper
+      const col = document.createElement('div');
+      col.className = 'col-12 col-sm-6 col-lg-4';
+
+      // Card
+      const card = document.createElement('div');
+      card.className = 'skill-card';
+      card.style.setProperty('--c1', s.c1);
+      card.style.setProperty('--c2', s.c2);
+
+      // Ring gauge
+      const ring = document.createElement('div');
+      ring.className = 'skill-ring';
+      ring.style.setProperty('--pct', String(s.level));
+      ring.style.setProperty('--c1', s.c1);
+      ring.style.setProperty('--c2', s.c2);
+      ring.innerHTML = `<div class="ring-label">${s.level}%</div>`;
+
+      // Body
+      const body = document.createElement('div');
+      body.className = 'skill-body';
+      body.innerHTML = `
+        <div class="skill-name">
+          <span>${s.name}</span>
+          <span class="skill-chip" style="border-color:${s.c1}33;background:rgba(255,255,255,.05)">${s.level}%</span>
+        </div>
+        <div class="skill-meta">
+          <div class="skill-bar" aria-label="${s.name} proficiency" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${s.level}">
+            <span style="--c1:${s.c1};--c2:${s.c2}"></span>
+          </div>
         </div>
       `;
-      // dynamic ring with conic gradient representing level
-      const ring = el.querySelector('.ring');
-      ring.style.background = `conic-gradient(${s.c1} ${s.level*3.6}deg, rgba(255,255,255,0.06) 0deg)`;
 
-      // subtle staggered reveal
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(6px)';
-      grid.appendChild(el);
-      requestAnimationFrame(()=>{
-        setTimeout(()=>{
-          el.style.transition = 'opacity .25s ease, transform .25s ease';
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, 60*idx);
+      card.appendChild(ring);
+      card.appendChild(body);
+      col.appendChild(card);
+      grid.appendChild(col);
+
+      // Staggered reveal + animate bar width
+      const bar = body.querySelector('.skill-bar > span');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(6px)';
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          card.style.transition = 'opacity .25s ease, transform .25s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+          bar.style.width = s.level + '%';
+        }, 50 * idx);
       });
     });
+  })();
