@@ -40,6 +40,6 @@ A futuristic quiz experience with glowing UI elements and real-time analytics, p
 
 **Mahesh Shinde**  
 Full-Stack Java Developer  
-[GitHub](https://github.com/maheshshinde9100) | [LinkedIn](https://linkedin.com/in/maheshshinde9100)
+[Portfolio](https://maheshshinde-dev.vercel.app) | [GitHub](https://github.com/maheshshinde9100) | [LinkedIn](https://linkedin.com/in/maheshshinde9100)
 
 *"Built with passion and neon lights"*
