@@ -1,196 +1,293 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .quiz-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 30px;
-        }
-        .quiz-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .question-container {
-            display: none;
-        }
-        .option-btn {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 10px;
-            padding: 12px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        .option-btn:hover {
-            background-color: #f1f3f5;
-        }
-        .timer {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #dc3545;
-        }
-        .result-container {
-            display: none;
-        }
-        .progress {
-            height: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>Neon Quiz • By Mahesh</title>
+  <meta name="description" content="Futuristic quiz app powered by the Open Trivia DB public API." />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@300;400;600;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+   <!-- Background FX layers  -->
+  <div class="fx-blobs"></div>
+  <div class="fx-grid"></div>
+  <div class="fx-scan"></div>
+  <div class="fx-stars"></div>
+
+   <!-- Top bar  -->
+  <nav class="navbar navbar-dark" style="background:rgba(0,0,0,.25); backdrop-filter: blur(8px); border-bottom:1px solid rgba(255,255,255,.08);">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <!-- Quiz Setup Form -->
-                <div class="quiz-container" id="setup-container">
-                    <div class="quiz-header text-center mb-4">
-                        <h1>Quiz App</h1>
-                        <p class="lead">Test your knowledge with customized quizzes</p>
-                    </div>
-                    
-                    <form id="quiz-settings">
-                        <div class="mb-3">
-                            <label for="trivia_amount" class="form-label">Number of Questions (1-50)</label>
-                            <input type="number" name="trivia_amount" id="trivia_amount" class="form-control" min="1" max="50" value="10" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="trivia_category" class="form-label">Select Category</label>
-                            <select name="trivia_category" id="trivia_category" class="form-control">
-                                <option value="any">Any Category</option>
-                                <option value="9" selected>General Knowledge</option>
-                                <option value="10">Entertainment: Books</option>
-                                <option value="11">Entertainment: Film</option>
-                                <option value="12">Entertainment: Music</option>
-                                <option value="13">Entertainment: Musicals & Theatres</option>
-                                <option value="14">Entertainment: Television</option>
-                                <option value="15">Entertainment: Video Games</option>
-                                <option value="16">Entertainment: Board Games</option>
-                                <option value="17">Science & Nature</option>
-                                <option value="18">Science: Computers</option>
-                                <option value="19">Science: Mathematics</option>
-                                <option value="20">Mythology</option>
-                                <option value="21">Sports</option>
-                                <option value="22">Geography</option>
-                                <option value="23">History</option>
-                                <option value="24">Politics</option>
-                                <option value="25">Art</option>
-                                <option value="26">Celebrities</option>
-                                <option value="27">Animals</option>
-                                <option value="28">Vehicles</option>
-                                <option value="29">Entertainment: Comics</option>
-                                <option value="30">Science: Gadgets</option>
-                                <option value="31">Entertainment: Japanese Anime & Manga</option>
-                                <option value="32">Entertainment: Cartoon & Animations</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="trivia_difficulty" class="form-label">Select Difficulty</label>
-                            <select name="trivia_difficulty" id="trivia_difficulty" class="form-control">
-                                <option value="any">Any Difficulty</option>
-                                <option value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="trivia_type" class="form-label">Select Question Type</label>
-                            <select name="trivia_type" id="trivia_type" class="form-control">
-                                <option value="any">Any Type</option>
-                                <option value="multiple" selected>Multiple Choice</option>
-                                <option value="boolean">True / False</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="trivia_encode" class="form-label">Select Encoding</label>
-                            <select name="trivia_encode" id="trivia_encode" class="form-control">
-                                <option value="default">Default Encoding</option>
-                                <option value="urlLegacy">Legacy URL Encoding</option>
-                                <option value="url3986">URL Encoding (RFC 3986)</option>
-                                <option value="base64">Base64 Encoding</option>
-                            </select>
-                        </div>
-                        
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Start Quiz</button>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Quiz Question Container -->
-                <div class="quiz-container" id="quiz-container" style="display: none;">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="timer" id="timer">Time: 30s</div>
-                        <div class="question-count" id="question-count">Question 1 of 10</div>
-                    </div>
-                    
-                    <div class="progress">
-                        <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%"></div>
-                    </div>
-                    
-                    <div class="question-container" id="question-container">
-                        <h3 class="mb-4" id="question-text">Question text goes here</h3>
-                        
-                        <div id="options-container">
-                            <!-- Options will be inserted here by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="d-flex justify-content-between mt-4">
-                        <button class="btn btn-outline-secondary" id="prev-btn" disabled>Previous</button>
-                        <button class="btn btn-primary" id="next-btn">Next</button>
-                    </div>
-                </div>
-                
-                <!-- Results Container -->
-                <div class="quiz-container result-container" id="result-container" style="display: none;">
-                    <div class="quiz-header text-center mb-4">
-                        <h1>Quiz Results</h1>
-                    </div>
-                    
-                    <div class="text-center mb-4">
-                        <h2 id="score-text">Your Score: 8/10</h2>
-                        <p class="lead" id="percentage">80% Correct</p>
-                        <div class="mt-3">
-                            <span id="difficulty-badge" class="badge bg-info">Medium Difficulty</span>
-                            <span id="category-badge" class="badge bg-secondary">General Knowledge</span>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4" id="results-summary">
-                        <!-- Results will be inserted here by JavaScript -->
-                    </div>
-                    
-                    <div class="d-grid">
-                        <button class="btn btn-primary" id="restart-btn">Take Another Quiz</button>
-                    </div>
-                </div>
-            </div>
+      <span class="navbar-brand mb-0 h1 brand">NEON QUIZ</span>
+      <div class="d-flex align-items-center gap-2">
+        <button id="reduceFxBtn" class="btn btn-ghost btn-sm">
+          <i class="bi bi-stars me-1"></i>
+          Toggle FX
+        </button>
+        <a class="btn btn-neon btn-sm" href="https://opentdb.com/api_config.php" target="_blank" rel="noopener">
+          <i class="bi bi-box-arrow-up-right me-1"></i> API
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4 py-md-5">
+
+     <!-- Config Card  -->
+    <section id="config-card" class="glass neon-border rounded-4 p-3 p-md-4 mb-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
+        <h1 class="h4 m-0 brand">Configure Your Quiz</h1>
+        <div class="d-flex flex-wrap gap-2">
+          <button id="quickSample" type="button" class="btn btn-neon btn-sm">
+            <i class="bi bi-lightning-charge-fill me-1"></i> Quick Start: Sample API
+          </button>
+          <button id="offlineSample" type="button" class="btn btn-ghost btn-sm">
+            <i class="bi bi-wifi-off me-1"></i> Run Offline Sample
+          </button>
         </div>
+      </div>
+
+      <form id="configForm" class="row g-3">
+        <div class="col-12 col-md-3">
+          <label class="form-label">Amount (1-50)</label>
+          <input type="number" class="form-control bg-transparent text-white" id="amount" min="1" max="50" value="10" />
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label">Category</label>
+          <select class="form-select bg-transparent text-white" id="category">
+            <option value="">Any</option>
+            <option value="9">General Knowledge</option>
+            <option value="10">Entertainment: Books</option>
+            <option value="11">Entertainment: Film</option>
+            <option value="12">Entertainment: Music</option>
+            <option value="13">Entertainment: Musicals & Theatres</option>
+            <option value="14">Entertainment: Television</option>
+            <option value="15">Entertainment: Video Games</option>
+            <option value="16">Entertainment: Board Games</option>
+            <option value="17">Science & Nature</option>
+            <option value="18">Science: Computers</option>
+            <option value="19">Science: Mathematics</option>
+            <option value="20">Mythology</option>
+            <option value="21">Sports</option>
+            <option value="22">Geography</option>
+            <option value="23">History</option>
+            <option value="24">Politics</option>
+            <option value="25">Art</option>
+            <option value="26">Celebrities</option>
+            <option value="27">Animals</option>
+            <option value="28">Vehicles</option>
+            <option value="29">Entertainment: Comics</option>
+            <option value="30">Science: Gadgets</option>
+            <option value="31">Entertainment: Japanese Anime & Manga</option>
+            <option value="32">Entertainment: Cartoon & Animations</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="form-label">Difficulty</label>
+          <select class="form-select bg-transparent text-white" id="difficulty">
+            <option value="">Any</option>
+            <option>easy</option>
+            <option>medium</option>
+            <option>hard</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="form-label">Type</label>
+          <select class="form-select bg-transparent text-white" id="type">
+            <option value="">Any</option>
+            <option value="multiple">Multiple</option>
+            <option value="boolean">True/False</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-2">
+          <label class="form-label">Encoding</label>
+          <select class="form-select bg-transparent text-white" id="encode">
+            <option value="default">default</option>
+            <option value="urlLegacy">urlLegacy</option>
+            <option value="url3986">url3986</option>
+            <option value="base64">base64</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" id="penalty" />
+            <label class="form-check-label" for="penalty">
+              Apply -0.5 penalty for wrong answers
+            </label>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 text-md-end">
+          <button type="submit" class="btn btn-neon mt-2">
+            <i class="bi bi-play-fill me-1"></i> Start Quiz
+          </button>
+        </div>
+      </form>
+
+      <div class="small text-secondary mt-3">
+        API URL: <span id="apiUrlPreview" class="text-info-emphasis"></span>
+      </div>
+
+      <div class="small text-secondary mt-2">
+        <!-- Tip: If a category/difficulty returns no questions, the app retries with broader settings automatically. -->
+      </div>
+    </section>
+
+     <!-- Loading / Skeleton  -->
+    <section id="loading" class="glass rounded-4 p-4 d-none">
+      <div class="row align-items-center g-3">
+        <div class="col-auto">
+          <div class="spinner-border text-info" role="status"></div>
+        </div>
+        <div class="col">
+          <div class="skeleton" style="height:16px;width:40%"></div>
+          <div class="skeleton mt-2" style="height:16px;width:70%"></div>
+          <div class="small text-secondary mt-2">
+            Fetching from: <span id="apiUrlLive" class="text-info-emphasis"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+     <!-- Quiz Card  -->
+    <section id="quiz-card" class="glass neon-border rounded-4 p-3 p-md-4 d-none">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <span id="qCounter" class="badge bg-info-subtle text-info-emphasis">Q 1/10</span>
+          <span id="qCategory" class="badge badge-soft">Category</span>
+          <span id="qDifficulty" class="badge badge-soft">Difficulty</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+           Timer 
+          <div class="timer-wrap">
+            <svg class="timer-ring" width="120" height="120">
+              <defs>
+                <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#22d3ee"/>
+                  <stop offset="100%" stop-color="#a78bfa"/>
+                </linearGradient>
+              </defs>
+              <circle class="timer-bg" cx="60" cy="60" r="52" stroke-width="10" fill="none"></circle>
+              <circle id="timerFg" class="timer-fg" cx="60" cy="60" r="52" stroke-width="10" fill="none" stroke-dasharray="326.72" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="time"><span id="timeLabel">30</span>s</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div id="questionText" class="fs-5 fw-semibold"></div>
+      </div>
+
+      <div id="options" class="d-grid gap-2"></div>
+
+      <div class="d-flex align-items-center justify-content-between mt-3">
+        <div class="text-secondary small">Scoring: +1 correct, +time bonus, <span id="penaltyHint">no penalty</span>.</div>
+        <div class="d-flex gap-2">
+          <button id="skipBtn" class="btn btn-ghost"><i class="bi bi-skip-forward me-1"></i> Skip</button>
+          <button id="nextBtn" class="btn btn-neon" disabled><i class="bi bi-arrow-right-circle me-1"></i> Next</button>
+        </div>
+      </div>
+
+      <div class="progress mt-3" style="height:8px;">
+        <div id="progressBar" class="progress-bar bg-info" role="progressbar" style="width: 0%;"></div>
+      </div>
+    </section>
+
+     <!-- Results Card  -->
+    <section id="results-card" class="glass neon-border rounded-4 p-4 d-none">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-md-auto position-relative">
+          <div class="donut" id="donut" style="--p:0;"></div>
+          <div class="donut-label">
+            <div class="text-center">
+              <div class="fw-bold fs-3" id="scoreLabel">0</div>
+              <div class="text-secondary small">Score</div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h2 class="h4 brand">Results</h2>
+          <div class="row g-2">
+            <div class="col-6 col-md-3">
+              <div class="badge badge-soft w-100 py-2"><i class="bi bi-check2-circle text-success me-1"></i> Correct: <span id="correctCount">0</span></div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="badge badge-soft w-100 py-2"><i class="bi bi-x-circle text-danger me-1"></i> Wrong: <span id="wrongCount">0</span></div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="badge badge-soft w-100 py-2"><i class="bi bi-percent text-info me-1"></i> %: <span id="percent">0</span></div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="badge badge-soft w-100 py-2"><i class="bi bi-stopwatch text-warning me-1"></i> Avg s: <span id="avgTime">0</span></div>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button id="downloadJson" class="btn btn-ghost"><i class="bi bi-download me-1"></i> Breakdown JSON</button>
+            <button id="playAgain" class="btn btn-neon"><i class="bi bi-arrow-counterclockwise me-1"></i> Play Again</button>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-secondary-subtle my-4" />
+      <div>
+        <h3 class="h6 text-secondary mb-2">Answer Breakdown</h3>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-borderless align-middle" style="--bs-table-bg: rgba(255,255,255,.04);">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Your Answer</th>
+                <th>Correct</th>
+                <th>Time (s)</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody id="breakdownBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+     <!-- Toasts  -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+      <div id="toast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div id="toastBody" class="toast-body"></div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JavaScript -->
-    <script src="script.js"></script>
+  </main>
+
+   <!-- Bootstrap JS  -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+<script src="./js/script.js"></script>
 </body>
 </html>
