@@ -4,24 +4,29 @@
     fxLayers.forEach(el => el.style.display = hidden ? '' : 'none');
   });
 
-  const skills = [
+const skills = [
     { name: 'Java', level: 91, c1:'#ef4444', c2:'#f97316' },       // Red-Orange
     { name: 'JavaScript', level: 85, c1:'#f59e0b', c2:'#eab308' }, // Gold-Yellow
     { name: 'C++', level: 70, c1:'#a855f7', c2:'#d946ef' },        // Purple-Pink
-    { name: 'React.js', level: 80, c1:'#0ea5e9', c2:'#3b82f6' },   // Blue-Purple
+    { name: 'React.js', level: 75, c1:'#0ea5e9', c2:'#3b82f6' },   // Blue-Purple
     { name: 'Tailwind CSS', level: 80, c1:'#06b6d4', c2:'#22d3ee' }, // Cyan
     { name: 'Spring Boot', level: 90, c1:'#16a34a', c2:'#22c55e' },  // Green
     { name: 'Node.js', level: 70, c1:'#10b981', c2:'#14b8a6' },      // Teal
     { name: 'Hibernate', level: 90, c1:'#84cc16', c2:'#a3e635' },    // Lime
-    { name: 'MongoDB', level: 80, c1:'#22d3ee', c2:'#818cf8' },      // Cyan-Purple
+    { name: 'MongoDB', level: 89, c1:'#22d3ee', c2:'#818cf8' },      // Cyan-Purple
     { name: 'MySQL', level: 85, c1:'#60a5fa', c2:'#38bdf8' },        // Light Blue
-    { name: 'Redis', level: 70, c1:'#f43f5e', c2:'#fb7185' },        // Pink
-    { name: 'Docker', level: 75, c1:'#2563eb', c2:'#1d4ed8' },       // Deep Blue
+    { name: 'Redis', level: 60, c1:'#f43f5e', c2:'#fb7185' },        // Pink
+    { name: 'Docker', level: 65, c1:'#2563eb', c2:'#1d4ed8' },       // Deep Blue
     { name: 'Git', level: 90, c1:'#f43f5e', c2:'#dc2626' },          // Red
-    { name: 'Postman', level: 85, c1:'#f97316', c2:'#f59e0b' },      // Orange
-    { name: 'SonarQube', level: 65, c1:'#8b5cf6', c2:'#a855f7' },    // Purple
+    { name: 'Postman', level: 95, c1:'#f97316', c2:'#f59e0b' },      // Orange
+    { name: 'SonarQube', level: 70, c1:'#8b5cf6', c2:'#a855f7' },    // Purple
     { name: 'Kafka', level: 40, c1:'#d946ef', c2:'#c026d3' },        // Pink-Purple
-  ];
+    
+    // New additions with cyberpunk-friendly colors
+    { name: 'Google Cloud', level: 72, c1:'#4285F4', c2:'#34A853' }, // Google blue-green
+    { name: 'Maven', level: 75, c1:'#FF5722', c2:'#FF9800' },        // Orange gradient
+    { name: 'Android Studio', level: 86, c1:'#3DDC84', c2:'#00C853' } // Android green
+];
 
   // Render enhanced skill cards (ring + bar)
   (function renderSkills() {
