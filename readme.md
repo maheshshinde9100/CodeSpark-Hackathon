@@ -1,7 +1,8 @@
-# NeonQuiz — Developed by Mahesh Shinde
+# NeonQuiz — Developed by Mahesh Shinde  
+🚀 **Live Demo:**  https://neonquiz-by-mahesh.netlify.app/
 
 <p align="center">
-  <img alt="NeonQuiz Screenshot" src="./public/screenshot_1.png" width="680" />
+  <img alt="NeonQuiz Screenshot" src="/public/screenshot_1.png" width="680" />
 </p>
 
 A futuristic quiz experience with glowing UI elements and real-time analytics, powered by Open Trivia DB.
@@ -21,8 +22,8 @@ A futuristic quiz experience with glowing UI elements and real-time analytics, p
 ## Workflow
 
 <p align="center">
-  <img src="./public/quiz_execution.png" alt="Quiz Execution Flow" width="45%">
-  <img src="./public/result_analysis.png" alt="Result Analysis" width="45%">
+  <img src="/public/quiz_execution.png" alt="Quiz Execution Flow" width="45%">
+  <img src="/public/result_analysis.png" alt="Result Analysis" width="45%">
 </p>
 
 1. **Configure**: Set questions, category, and difficulty
