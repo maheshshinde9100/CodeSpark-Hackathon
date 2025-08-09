@@ -9,7 +9,6 @@ A futuristic quiz experience with glowing UI elements and real-time analytics, p
 <p align="center">
   <a href="https://opentdb.com/" target="_blank"><img alt="API" src="https://img.shields.io/badge/API-OpenTDB-22d3ee?style=for-the-badge&logo=database" /></a>
   <img alt="Tech" src="https://img.shields.io/badge/HTML5/CSS3/JS-FF5722?style=for-the-badge" />
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" />
 </p>
 
 ## Key Features
@@ -40,7 +39,7 @@ A futuristic quiz experience with glowing UI elements and real-time analytics, p
 ## Developer
 
 **Mahesh Shinde**  
-Full-Stack Developer  
+Full-Stack Java Developer  
 [GitHub](https://github.com/maheshshinde9100) | [LinkedIn](https://linkedin.com/in/maheshshinde9100)
 
 *"Built with passion and neon lights"*
