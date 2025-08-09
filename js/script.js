@@ -1,4 +1,3 @@
-    // ------------------- Offline SAMPLE RESPONSE (from your message) -------------------
     const SAMPLE_RESPONSE = {
       "response_code": 0,
       "results": [
