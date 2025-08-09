@@ -1,7 +1,7 @@
 # NeonQuiz — Developed by Mahesh Shinde
 
 <p align="center">
-  <img alt="NeonQuiz Screenshot" src="public/og-neon-gradient.png" width="680" />
+  <img alt="NeonQuiz Screenshot" src="./public/screenshot_1.png" width="680" />
 </p>
 
 A futuristic quiz experience with glowing UI elements and real-time analytics, powered by Open Trivia DB.
